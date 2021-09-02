@@ -1,1 +1,0 @@
-setInterval(() => console.log("0.5 Second has passed..."), 1000)

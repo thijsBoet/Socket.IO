@@ -1,0 +1,15 @@
+{
+  "name": "2-before-socket-io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "justWsServer.js",
+  "scripts": {
+    "start": "nodemon justWsServer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.2.1"
+  }
+}
