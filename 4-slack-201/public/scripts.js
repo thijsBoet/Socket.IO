@@ -8,6 +8,7 @@ const socket3 = io("http://localhost:9000/marketing") // the marketing namespace
 
 socket.on('connect', () => console.log(socket.id))
 socket2.on('connect', () => console.log(socket2.id))
+socket2.on('welcome', msg => console.log(msg))
 
 socket.on("messageFromServer", dataFromServer => {
 	console.log(dataFromServer)
