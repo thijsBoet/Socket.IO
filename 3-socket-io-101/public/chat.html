@@ -1,9 +1,78 @@
-<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<style>
+	input {
+		width: 100%;
+		height: 35px;
+	}
+	#messages {
+		list-style-type: none;
+		margin:	0;
+		padding: 0;
+	}
+	#messages li {
+		padding: 5px 10px;
+	}
+	#messages li:nth-child(odd) {
+		background: #eee;
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<form id="message-form">
+				<div class="col-sm-10">
+					<input id="user-message" type="text" placeholder="Enter your message">
+
+					</input>
+				</div>
+				<div class="col-sm-2">
+					<input type="submit" class="btn btn-primary" value="Send!">
+				</div>
+			</form>
+			<ul id="messages">
+				<!-- THIS WILL BE POPULATED BY JS -->
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
 <script>
+	const form = document.getElementById("message-form")
+	const messageInput = document.getElementById("user-message")
+	const message = document.getElementById("messages")
+
 	const socket = io("http://localhost:9000/")
+	socket.on('connect', () => {
+		console.log(socket.id)
+	})
 	socket.on("messageFromServer", dataFromServer => {
 		console.log(dataFromServer)
-		socket.emit("messageFromServer", {data: "This is from the client"})
+		socket.emit("messageFromServer", { data: "This is from the client" })
 	})
-</script> 
+
+	form.addEventListener("submit", e => {
+		e.preventDefault();
+		let newMessage = messageInput.value
+
+		socket.emit("newMessageToServer", { text: newMessage })
+		newMessage = ""
+	})
+
+	socket.on("messageToClients", msg => {
+		message.innerHTML += `<li>${msg.text}</li>`
+	})
+
+
+
+	// socket.on('ping', () =>  {
+	// 	console.log("Ping was received from the server")
+	// 	console.log(io.protocol)
+	// })
+	// socket.on('pong', latency => {
+	// 	console.log("Pong was send to the server", latency)
+	// })
+</script>
