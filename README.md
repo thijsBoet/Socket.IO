@@ -1,8 +1,7 @@
 # Socket.IO
-----
 
 ## Before Socket.IO
-* Socket.IO build upon **Web Socket** API, which is build upon TCP/IP
+* Socket.IO build upon **Web Socket** API, which is build upon TCP/IP Socket
 
 #### Network Layers
 * App - HTTP, FTP, SSH | Node/Express, Flask

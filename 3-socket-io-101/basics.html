@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Basic Socket.IO</title>
+</head>
+
+<body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+	<script>
+		// let ws = new WebSocket("ws://localhost:8000");
+		const socket = io("http://localhost:8000/", {
+			withCredentials: false,
+			extraHeaders: {
+				"my-custom-header": "abcd"
+			}
+		})
+
+		// ws.onopen = (event) => 
+		socket.on("connection", data => {
+			socket.on("welcome", message => console.log(message))
+			// ws.send("I am so exited to be connected it's like Christmas")
+			socket.emit("message", { data: "I am so exited to be connected it's like Christmas" })
+		})
+	</script>
+</body>
+
+</html>
